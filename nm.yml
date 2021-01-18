@@ -1,0 +1,49 @@
+version: "3.4"
+services:
+  eth1:
+    restart: "${RESTART}"
+    user: ${NM_USER}
+    stop_grace_period: 3m
+    build:
+      context: ./nethermind
+      dockerfile: ${NM_DOCKERFILE}
+      args:
+        - BUILD_TARGET=${NM_SRC_BUILD_TARGET} 
+        - DOCKER_TAG=${NM_DOCKER_TAG}
+        - USER=${NM_USER}
+    image: nethermind
+    volumes:
+      - nm-eth1-data:/var/lib/nethermind
+    ports:
+      - ${ETH1_PORT}:${ETH1_PORT}/tcp
+      - ${ETH1_PORT}:${ETH1_PORT}/udp
+    expose:
+      - ${ETH1_WS_PORT}/tcp
+    entrypoint:
+      - dotnet
+      - /nethermind/Nethermind.Runner.dll
+      - --Init.BaseDbPath
+      - /var/lib/nethermind
+      - --Init.WebSocketsEnabled
+      - "true"
+      - --JsonRpc.Enabled
+      - "true"
+      - --JsonRpc.EnabledModules
+      - "net,eth"
+      - --JsonRpc.Host
+      - 0.0.0.0
+      - --Network.DiscoveryPort
+      -  ${ETH1_PORT}
+      - --Network.P2PPort
+      -  ${ETH1_PORT}
+      - --JsonRpc.WebSocketsPort
+      - ${ETH1_WS_PORT}
+      - --Sync.FastSync
+      - "true"
+      - --config
+      - ${ETH1_NETWORK}
+  chainlink:
+    depends_on:
+      - eth1
+volumes:
+  nm-eth1-data:

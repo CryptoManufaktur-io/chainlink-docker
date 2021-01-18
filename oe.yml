@@ -1,0 +1,42 @@
+version: "3.4"
+services:
+  eth1:
+    restart: "${RESTART}"
+    user: ${OE_USER}
+    build:
+      context: ./openethereum
+      dockerfile: ${OE_DOCKERFILE}
+      args:
+        - USER=${OE_USER}
+        - DOCKER_TAG=${OE_DOCKER_TAG}
+    image: openethereum
+    stop_grace_period: 3m
+    volumes:
+      - oe-eth1-data:/var/lib/openethereum
+    ports:
+      - ${ETH1_PORT}:${ETH1_PORT}/tcp
+      - ${ETH1_PORT}:${ETH1_PORT}/udp
+    expose:
+      - ${ETH1_WS_PORT}/tcp
+    entrypoint:
+      - openethereum
+      - --no-ipc
+      - --no-secretstore
+      - --base-path=/var/lib/openethereum
+      - --ws-interface=all
+      - --ws-apis=net,eth,pubsub
+      - --ws-hosts=all
+      - --ws-origins=all
+      - --ws-port=${ETH1_WS_PORT}
+      - --chain=${ETH1_NETWORK}
+      - --port
+      - ${ETH1_PORT}
+      - --logging
+      - ${LOG_LEVEL}
+      - --snapshot-peers
+      - "250"
+  chainlink:
+    depends_on:
+      - eth1
+volumes:
+  oe-eth1-data:

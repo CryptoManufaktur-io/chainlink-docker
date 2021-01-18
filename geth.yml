@@ -1,0 +1,42 @@
+version: "3.4"
+services:
+  eth1:
+    restart: "${RESTART}"
+    user: ${GETH_USER}
+    build:
+      context: ./geth
+      dockerfile: ${GETH_DOCKERFILE}
+      args:
+        - BUILD_TARGET=${GETH_SRC_BUILD_TARGET} 
+        - USER=${GETH_USER}
+        - DOCKER_TAG=${GETH_DOCKER_TAG}
+    stop_signal: SIGINT
+    stop_grace_period: 3m
+    image: geth
+    volumes:
+      - geth-eth1-data:/var/lib/goethereum
+    ports:
+      - ${ETH1_PORT}:${ETH1_PORT}/tcp
+      - ${ETH1_PORT}:${ETH1_PORT}/udp
+    expose:
+      - ${ETH1_WS_PORT}/tcp
+    entrypoint:
+      - geth
+      - --nousb
+      - --datadir
+      - /var/lib/goethereum
+      - --port
+      - ${ETH1_PORT}
+      - --ws
+      - --ws.addr
+      - 0.0.0.0
+      - --ws.port
+      - ${ETH1_WS_PORT}
+      - --ws.api
+      - eth,net
+    command: ${GETH1_NETWORK}
+  chainlink:
+    depends_on:
+      - eth1
+volumes:
+  geth-eth1-data:
