@@ -9,7 +9,7 @@ services:
       args:
         - USER=${OE_USER}
         - DOCKER_TAG=${OE_DOCKER_TAG}
-    image: openethereum
+    image: openethereum_cl
     stop_grace_period: 3m
     volumes:
       - oe-eth1-data:/var/lib/openethereum

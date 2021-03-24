@@ -6,12 +6,7 @@ FROM openethereum/openethereum:${DOCKER_TAG}
 ARG BUILD_TARGET
 ARG USER
 
-ARG UID
-
 USER root
-
-RUN echo http://dl-2.alpinelinux.org/alpine/edge/community/ >> /etc/apk/repositories
-RUN apk --no-cache add shadow && usermod -u "${UID}" openethereum
 
 RUN cp /home/openethereum/openethereum /usr/local/bin
 
@@ -21,8 +16,6 @@ RUN mkdir -p /var/lib/openethereum && chown openethereum:openethereum /var/lib/o
 # Use an unprivileged user.
 USER openethereum
 
-EXPOSE 8080 8545 8180
-
 WORKDIR /var/lib/openethereum
 
-ENTRYPOINT ["openethereum", "--base-path=/var/lib/openethereum"]
+ENTRYPOINT ["openethereum"]

@@ -1,0 +1,18 @@
+version: '3.4'
+services:
+  pg_chainlink:
+    restart: "${RESTART}"
+    image: "postgres:${PG_DOCKER_TAG}"
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=chainlink
+    volumes:
+      - db-data:/var/lib/postgresql/data/
+  chainlink:
+    depends_on:
+      - pg_chainlink
+volumes:
+  db-data:

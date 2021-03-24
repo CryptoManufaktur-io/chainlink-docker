@@ -11,7 +11,7 @@ services:
         - BUILD_TARGET=${NM_SRC_BUILD_TARGET} 
         - DOCKER_TAG=${NM_DOCKER_TAG}
         - USER=${NM_USER}
-    image: nethermind
+    image: nethermind_cl
     volumes:
       - nm-eth1-data:/var/lib/nethermind
     ports:

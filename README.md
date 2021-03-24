@@ -1,4 +1,4 @@
-# link-docker v0.1
+# link-docker v0.2
 
 docker-compose files for chainlink node
 
@@ -11,6 +11,9 @@ Supported eth1 clients:
 * OpenEthereum (oe.yml)
 * Besu (besu.yml)
 * Nethermind (nm.yml) - won't be usable until it supports eth_subscribe, likely Q1 2021
+
+Option:
+* pgsql.yml - unencrypted PGSQL DB for quick dev environment
 
 # Prerequisites
 
@@ -29,24 +32,30 @@ Clone the tool and change into its directory:
 Set the wallet password and web UI user and password by editing files in the `.secrets` folder, called `wallet-password.txt`
 and `apicredentials.txt`.
 
+Move TLS files into `.secrets/tls`: `server.key` and `server.crt` for the node UI, and `pgsqlca.pem` for the CA cert of PGSQL
+
 Create `.env` from `default.env` and edit it:
 `cp default.env .env && nano .env`
 
-Set the `COMPOSE_FILE` to the mix of chainlink and eth1 you wish to run. If you are going to use a 3rd-party, set it
+Set the `COMPOSE_FILE` to the mix of chainlink and eth1 you wish to run. If you are going to use a 3rd-party or off-server, set it
 to just `chainlink.yml`. Pay attention to the networks supported by the different eth1 clients.
 
 Set the `ETH1_NODE` to the address of the eth1 service. Leave as-is for local, or use a 3rd-party `wss://` address.
+Set the `ETH1_FAILOVER_NODE` to the address of the failover eth1 service. This is set to same as the local node by default, and needs to be `https://`
+for an external / 3rd-party failover.
+
+Set the `PGSQL_URL`. If it's local for dev purposes, it can be `postgresql://postgres:postgres@pg_chainlink:5432/chainlink?sslmode=disable`. For an external
+DB, TLS should be enabled, and it'll be `postgresql://USER:PASSWORD@HOST:5432/chainlink?sslrootcert=/secrets/tls/pgsqlca.pem`, assuming the DB is called `chainlink`.
 
 Set the `NETWORK_ID` to the id of the network you are going to be on.
 
-Adjust `ETH1_NETWORK` to match the network, if you are going to use a local eth1 other than Geth.
-
-Adjust `GETH1_NETWORK` to match the network, if you are going to use a local Geth for eth1.
+Adjust `ETH1_NETWORK` to match the network, if you are going to use a local eth1.
 
 Adjust `LINK_CONTRACT_ADDRESS` to match the network.
 
 You can also adjust ports used by local eth1 and the chainlink web portal, and set the log level and chainlink version.
 
+#
 # Start chainlink
 
 And finally: Start chainlink. `docker-compose up -d chainlink`

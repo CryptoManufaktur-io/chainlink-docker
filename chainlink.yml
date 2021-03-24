@@ -1,16 +1,5 @@
 version: '3.4'
 services:
-  pg_chainlink:
-    restart: "${RESTART}"
-    image: "postgres:${PG_DOCKER_TAG}"
-    expose:
-      - 5432
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=chainlink
-    volumes:
-      - db-data:/var/lib/postgresql/data/
   chainlink:
     restart: "${RESTART}"
     user: chainlink
@@ -19,23 +8,24 @@ services:
       args:
         - USER=chainlink
         - DOCKER_TAG=${CHAIN_DOCKER_TAG}
-    image: "chainlink"
+    image: chainlink
     env_file: chainlink.env
     environment:
       - LOG_LEVEL=${LOG_LEVEL}
       - ETH_CHAIN_ID=${NETWORK_ID}
       - LINK_CONTRACT_ADDRESS=${LINK_CONTRACT_ADDRESS}
       - ETH_URL=${ETH1_NODE}
+      - ETH_SECONDARY_URL=${ETH1_FAILOVER_NODE}
       - CHAINLINK_PORT=${CHAIN_PORT}
-    depends_on:
-      - pg_chainlink
+      - CHAINLINK_TLS_PORT=${CHAIN_TLS_PORT}
+      - DATABASE_URL=${PGSQL_URL}
     ports:
       - ${CHAIN_PORT}:${CHAIN_PORT}/tcp
+      - ${CHAIN_TLS_PORT}:${CHAIN_TLS_PORT}/tcp
     volumes:
       - chainlink-data:/var/lib/chainlink/
       - ./.secrets:/secrets
-    entrypoint: wait-for-pgsql.sh pg_chainlink:5432 chainlink
+    entrypoint: wait-for-pgsql.sh ${PGSQL_URL} chainlink
     command: node start --password /secrets/wallet-password.txt --api /secrets/apicredentials.txt 
 volumes:
-  db-data:
   chainlink-data:
