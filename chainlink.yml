@@ -19,6 +19,7 @@ services:
       - CHAINLINK_PORT=${CHAIN_PORT}
       - CHAINLINK_TLS_PORT=${CHAIN_TLS_PORT}
       - DATABASE_URL=${PGSQL_URL}
+      - MINIMUM_CONTRACT_PAYMENT=${MIN_PAY}
     ports:
       - ${CHAIN_PORT}:${CHAIN_PORT}/tcp
       - ${CHAIN_TLS_PORT}:${CHAIN_TLS_PORT}/tcp
