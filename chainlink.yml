@@ -25,9 +25,7 @@ services:
     volumes:
       - chainlink-data:/var/lib/chainlink/
       - ./.secrets:/secrets
-    #requires a bit more script work to parse password with special chars well
-    #entrypoint: wait-for-pgsql.sh ${PGSQL_URL} chainlink
-    entrypoint: chainlink
+    entrypoint: wait-for-pgsql.sh ${PGSQL_URL} chainlink
     command: node start --password /secrets/wallet-password.txt --api /secrets/apicredentials.txt 
 volumes:
   chainlink-data:
