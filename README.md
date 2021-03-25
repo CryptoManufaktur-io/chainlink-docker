@@ -60,7 +60,7 @@ You can also adjust ports used by local eth1 and the chainlink web portal, and s
 
 And finally: Start chainlink. `docker-compose up -d chainlink`
 
-Open a browser and connect to `http://SERVERIP:6688`, assuming default web UI port. Log in with the username and password
+Open a browser and connect to `https://SERVERIP:8433`, assuming default web UI TLS port. Log in with the username and password
 you specified in `apicredentials.txt`, and continue from there with job creation.
 
 To stop all services, use `docker-compose down`
