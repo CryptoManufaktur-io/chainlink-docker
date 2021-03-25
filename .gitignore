@@ -3,3 +3,5 @@ docker-compose.yml
 *.swp
 .secrets/apicredentials.txt
 .secrets/wallet-password.txt
+.secrets/tls
+!.secrets/tls/tls-keys-go-here
