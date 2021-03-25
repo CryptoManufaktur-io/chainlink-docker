@@ -15,7 +15,7 @@ services:
       - ETH_CHAIN_ID=${NETWORK_ID}
       - LINK_CONTRACT_ADDRESS=${LINK_CONTRACT_ADDRESS}
       - ETH_URL=${ETH1_NODE}
-      - ETH_SECONDARY_URL=${ETH1_FAILOVER_NODE}
+      - ETH_SECONDARY_URLS=${ETH1_FAILOVER_NODE}
       - CHAINLINK_PORT=${CHAIN_PORT}
       - CHAINLINK_TLS_PORT=${CHAIN_TLS_PORT}
       - DATABASE_URL=${PGSQL_URL}
@@ -25,7 +25,9 @@ services:
     volumes:
       - chainlink-data:/var/lib/chainlink/
       - ./.secrets:/secrets
-    entrypoint: wait-for-pgsql.sh ${PGSQL_URL} chainlink
+    #requires a bit more script work to parse password with special chars well
+    #entrypoint: wait-for-pgsql.sh ${PGSQL_URL} chainlink
+    entrypoint: chainlink
     command: node start --password /secrets/wallet-password.txt --api /secrets/apicredentials.txt 
 volumes:
   chainlink-data:

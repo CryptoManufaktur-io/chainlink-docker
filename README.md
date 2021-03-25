@@ -30,7 +30,7 @@ Clone the tool and change into its directory:
 `git clone https://github.com/yorickdowne/link-docker.git && cd link-docker`
 
 Set the wallet password and web UI user and password by editing files in the `.secrets` folder, called `wallet-password.txt`
-and `apicredentials.txt`.
+and `apicredentials.txt`. The requirements for the wallet password are 12 characters or longer, 3 uppercase, 3 numbers, 3 symbols.
 
 Move TLS files into `.secrets/tls`: `server.key` and `server.crt` for the node UI, and `pgsqlca.pem` for the CA cert of PGSQL
 
