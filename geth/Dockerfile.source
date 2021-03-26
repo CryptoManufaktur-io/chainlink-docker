@@ -5,7 +5,7 @@ FROM golang:alpine as builder
 ARG DOCKER_TAG
 
 ARG BUILD_TARGET
-ARG USER
+ARG USER=geth
 
 RUN apk update && apk add --no-cache make gcc musl-dev linux-headers git ca-certificates bash
 
@@ -24,7 +24,7 @@ RUN mkdir -p /var/lib/goethereum && chown ${USER}:${USER} /var/lib/goethereum
 # Pull all binaries into a second stage deploy scratch container
 FROM scratch
 
-ARG USER
+ARG USER=geth
 
 # Import the user and group files from the builder.
 COPY --from=builder /etc/passwd /etc/passwd

@@ -1,11 +1,11 @@
-ARG DOCKER_TAG
+ARG DOCKER_TAG=stable
 
 FROM ethereum/client-go:${DOCKER_TAG}
 
 # Unused, this is here to avoid build time complaints
 ARG BUILD_TARGET
 
-ARG USER
+ARG USER=geth
 
 # See https://stackoverflow.com/a/55757473/12429735RUN
 RUN adduser \

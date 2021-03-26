@@ -2,12 +2,12 @@ version: "3.4"
 services:
   eth1:
     restart: "${RESTART}"
-    user: ${OE_USER}
+    user: openethereum
     build:
       context: ./openethereum
       dockerfile: ${OE_DOCKERFILE}
       args:
-        - USER=${OE_USER}
+        - BUILD_TARGET=${OE_SRC_BUILD_TARGET}
         - DOCKER_TAG=${OE_DOCKER_TAG}
     image: openethereum_cl
     stop_grace_period: 3m
@@ -35,6 +35,8 @@ services:
       - ${LOG_LEVEL}
       - --snapshot-peers
       - "250"
+      - --cache-size
+      - "4096"
   chainlink:
     depends_on:
       - eth1

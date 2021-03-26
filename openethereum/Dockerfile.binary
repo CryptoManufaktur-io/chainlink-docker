@@ -1,10 +1,11 @@
-ARG DOCKER_TAG
+ARG DOCKER_TAG=latest
 
 FROM openethereum/openethereum:${DOCKER_TAG}
 
-#Next two are unused but included to avoid warnings
+#Next is unused but included to avoid warnings
 ARG BUILD_TARGET
-ARG USER
+
+ARG USER=openethereum
 
 USER root
 
@@ -14,7 +15,7 @@ RUN cp /home/openethereum/openethereum /usr/local/bin
 RUN mkdir -p /var/lib/openethereum && chown openethereum:openethereum /var/lib/openethereum && chmod 700 /var/lib/openethereum
 
 # Use an unprivileged user.
-USER openethereum
+USER ${USER}
 
 WORKDIR /var/lib/openethereum
 

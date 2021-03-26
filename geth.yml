@@ -2,13 +2,12 @@ version: "3.4"
 services:
   eth1:
     restart: "${RESTART}"
-    user: ${GETH_USER}
+    user: geth
     build:
       context: ./geth
       dockerfile: ${GETH_DOCKERFILE}
       args:
         - BUILD_TARGET=${GETH_SRC_BUILD_TARGET} 
-        - USER=${GETH_USER}
         - DOCKER_TAG=${GETH_DOCKER_TAG}
     stop_signal: SIGINT
     stop_grace_period: 3m

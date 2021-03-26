@@ -2,7 +2,7 @@ version: "3.4"
 services:
   eth1:
     restart: "${RESTART}"
-    user: ${NM_USER}
+    user: nethermind
     stop_grace_period: 3m
     build:
       context: ./nethermind
@@ -10,7 +10,6 @@ services:
       args:
         - BUILD_TARGET=${NM_SRC_BUILD_TARGET} 
         - DOCKER_TAG=${NM_DOCKER_TAG}
-        - USER=${NM_USER}
     image: nethermind_cl
     volumes:
       - nm-eth1-data:/var/lib/nethermind
@@ -42,6 +41,10 @@ services:
       - "true"
       - --config
       - ${ETH1_NETWORK}
+      - --Pruning.Enabled
+      - "true"
+      - --Pruning.CacheMb
+      - "4096"
   chainlink:
     depends_on:
       - eth1

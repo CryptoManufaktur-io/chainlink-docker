@@ -18,7 +18,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:5.0
 
 RUN apt-get update && apt-get -y install libsnappy-dev libc6-dev libc6
 
-ARG USER
+ARG USER=nethermind
 
 RUN adduser \
     --disabled-password \
@@ -37,6 +37,6 @@ RUN chown -R ${USER}:${USER} /nethermind
 RUN mkdir -p /var/lib/nethermind && chown ${USER}:${USER} /var/lib/nethermind
 
 # Use an unprivileged user.
-USER ${USER}:${USER}
+USER ${USER}
 
 ENTRYPOINT ["./Nethermind.Runner"]
