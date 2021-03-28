@@ -34,7 +34,8 @@ Clone the tool and change into its directory:
 Set the wallet password and web UI user and password by editing files in the `.secrets` folder, called `wallet-password.txt`
 and `apicredentials.txt`. The requirements for the wallet password are 12 characters or longer, 3 uppercase, 3 numbers, 3 symbols.
 
-Move TLS files into `.secrets/tls`: `server.key` and `server.crt` for the node UI, and `pgsqlca.pem` for the CA cert of PGSQL
+Move TLS files into `.secrets/tls`: `server.key` and `server.crt` for the node UI, and `pgsqlca.pem` for the CA cert of PGSQL.
+If you want to use a self-signed cert for testing purposes for the Web UI, you can create one with `openssl req -newkey rsa:2048 -nodes -keyout .secrets/server.key -x509 -days 365 -out .secrets/server.crt`
 
 Create `.env` from `default.env` and edit it:
 `cp default.env .env && nano .env`
