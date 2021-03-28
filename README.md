@@ -21,6 +21,8 @@ Some flavor of Linux, and git, docker and docker-compose. Instructions will assu
 
 `sudo apt update && sudo apt dist-upgrade` and `sudo apt install -y git docker docker-compose`
 
+`sudo systemctl enable docker` so that docker runs on system start.
+
 You may want to `sudo usermod -aG docker YOURUSERNAME` and then log out and back in to simplify running docker commands,
 which will otherwise require `sudo` themselves.
 
