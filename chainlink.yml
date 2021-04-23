@@ -34,6 +34,9 @@ services:
   eth1-proxy:
     restart: ${RESTART}
     image: fiews/cl-eth-failover
-    command: ${ETH1_NODE_1} ${ETH1_NODE_2} ${ETH1_NODE_3}
+    volumes:
+      - eth1-proxy:/var/eth1-proxy/
+    entrypoint: /bin/sh -c "node index.js ${ETH1_NODE_1} ${ETH1_NODE_2} ${ETH1_NODE_3} 2>&1 | tee /var/eth1-proxy/eth1-proxy.log"
 volumes:
   chainlink-data:
+  eth1-proxy:
