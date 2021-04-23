@@ -10,6 +10,8 @@ services:
         - DOCKER_TAG=${CHAIN_DOCKER_TAG}
     image: chainlink
     env_file: chainlink.env
+    depends_on:
+      - eth1-proxy
     environment:
       - LOG_LEVEL=${LOG_LEVEL}
       - ETH_CHAIN_ID=${NETWORK_ID}
