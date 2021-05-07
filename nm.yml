@@ -1,6 +1,6 @@
 version: "3.4"
 services:
-  eth1:
+  eth:
     restart: "${RESTART}"
     user: nethermind
     stop_grace_period: 3m
@@ -12,12 +12,12 @@ services:
         - DOCKER_TAG=${NM_DOCKER_TAG}
     image: nethermind_cl
     volumes:
-      - nm-eth1-data:/var/lib/nethermind
+      - nm-eth-data:/var/lib/nethermind
     ports:
-      - ${ETH1_PORT}:${ETH1_PORT}/tcp
-      - ${ETH1_PORT}:${ETH1_PORT}/udp
+      - ${ETH_PORT}:${ETH_PORT}/tcp
+      - ${ETH_PORT}:${ETH_PORT}/udp
     expose:
-      - ${ETH1_WS_PORT}/tcp
+      - ${ETH_WS_PORT}/tcp
     entrypoint:
       - dotnet
       - /nethermind/Nethermind.Runner.dll
@@ -28,25 +28,25 @@ services:
       - --JsonRpc.Enabled
       - "true"
       - --JsonRpc.EnabledModules
-      - "net,eth"
+      - "net,eth,web3"
       - --JsonRpc.Host
       - 0.0.0.0
       - --Network.DiscoveryPort
-      -  ${ETH1_PORT}
+      -  ${ETH_PORT}
       - --Network.P2PPort
-      -  ${ETH1_PORT}
+      -  ${ETH_PORT}
       - --JsonRpc.WebSocketsPort
-      - ${ETH1_WS_PORT}
+      - ${ETH_WS_PORT}
       - --Sync.FastSync
       - "true"
       - --config
-      - ${ETH1_NETWORK}
+      - ${ETH_NETWORK}
       - --Pruning.Enabled
       - "true"
       - --Pruning.CacheMb
       - "4096"
   chainlink:
     depends_on:
-      - eth1
+      - eth
 volumes:
-  nm-eth1-data:
+  nm-eth-data:

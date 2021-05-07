@@ -1,6 +1,6 @@
 version: "3.4"
 services:
-  eth1:
+  eth:
     restart: "${RESTART}"
     user: openethereum
     build:
@@ -12,25 +12,25 @@ services:
     image: openethereum_cl
     stop_grace_period: 3m
     volumes:
-      - oe-eth1-data:/var/lib/openethereum
+      - oe-eth-data:/var/lib/openethereum
     ports:
-      - ${ETH1_PORT}:${ETH1_PORT}/tcp
-      - ${ETH1_PORT}:${ETH1_PORT}/udp
+      - ${ETH_PORT}:${ETH_PORT}/tcp
+      - ${ETH_PORT}:${ETH_PORT}/udp
     expose:
-      - ${ETH1_WS_PORT}/tcp
+      - ${ETH_WS_PORT}/tcp
     entrypoint:
       - openethereum
       - --no-ipc
       - --no-secretstore
       - --base-path=/var/lib/openethereum
       - --ws-interface=all
-      - --ws-apis=net,eth,pubsub
+      - --ws-apis=safe
       - --ws-hosts=all
       - --ws-origins=all
-      - --ws-port=${ETH1_WS_PORT}
-      - --chain=${ETH1_NETWORK}
+      - --ws-port=${ETH_WS_PORT}
+      - --chain=${ETH_NETWORK}
       - --port
-      - ${ETH1_PORT}
+      - ${ETH_PORT}
       - --logging
       - ${LOG_LEVEL}
       - --snapshot-peers
@@ -39,6 +39,6 @@ services:
       - "4096"
   chainlink:
     depends_on:
-      - eth1
+      - eth
 volumes:
-  oe-eth1-data:
+  oe-eth-data:

@@ -1,36 +1,36 @@
 version: "3.4"
 services:
-  eth1:
+  eth:
     restart: "${RESTART}"
     user: besu
     stop_grace_period: 3m
     image: hyperledger/besu
     volumes:
-      - besu-eth1-data:/opt/besu
+      - besu-eth-data:/opt/besu
     ports:
-      - ${ETH1_PORT}:${ETH1_PORT}/tcp
-      - ${ETH1_PORT}:${ETH1_PORT}/udp
+      - ${ETH_PORT}:${ETH_PORT}/tcp
+      - ${ETH_PORT}:${ETH_PORT}/udp
     expose:
-      - ${ETH1_WS_PORT}/tcp
+      - ${ETH_WS_PORT}/tcp
     entrypoint:
       - /opt/besu/bin/besu
       - --pruning-enabled
       - --p2p-port
-      -  ${ETH1_PORT}
+      -  ${ETH_PORT}
       - --rpc-ws-enabled
       - --rpc-ws-api
-      - "net,eth"
+      - "net,eth,web3"
       - --rpc-ws-host
       - 0.0.0.0
       - --rpc-ws-port
-      - ${ETH1_WS_PORT}
+      - ${ETH_WS_PORT}
       - --host-allowlist=eth1,localhost
       - --logging
       - ${LOG_LEVEL}
       - --network
-      - ${ETH1_NETWORK}
+      - ${ETH_NETWORK}
   chainlink:
     depends_on:
-      - eth1
+      - eth
 volumes:
-  besu-eth1-data:
+  besu-eth-data:

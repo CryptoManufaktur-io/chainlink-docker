@@ -3,14 +3,14 @@
 docker-compose files for chainlink node
 
 This tool simplifies the installation of a chainlink node with PostgreSQL and
-a choice of eth1 clients.
+a choice of eth clients.
 
-Supported eth1 clients:
+Supported eth clients:
 * 3rd-party such as infura or alchemy
 * Geth (geth.yml) 
 * OpenEthereum (oe.yml)
 * Besu (besu.yml)
-* Nethermind (nm.yml) - won't be usable until it supports eth_subscribe, likely Q1 2021
+* Nethermind (nm.yml) - not usable as of May 2021
 
 Option:
 * pgsql.yml - unencrypted PGSQL DB for quick dev environment
@@ -40,25 +40,24 @@ If you want to use a self-signed cert for testing purposes for the Web UI, you c
 Create `.env` from `default.env` and edit it:
 `cp default.env .env && nano .env`
 
-Set the `COMPOSE_FILE` to the mix of chainlink and eth1 you wish to run. If you are going to use a 3rd-party or off-server, set it
-to just `chainlink.yml`. Pay attention to the networks supported by the different eth1 clients.
+Set the `COMPOSE_FILE` to the mix of chainlink and eth node you wish to run. If you are going to use a 3rd-party or off-server, set it
+to just `chainlink.yml`. Pay attention to the networks supported by the different eth clients.
 
-Set the `ETH1_NODE` to the address of the eth1 service. Leave as-is for local, or use a 3rd-party `wss://` address.
-Set the `ETH1_FAILOVER_NODE` to the address of the failover eth1 service. This is set to same as the local node by default, and needs to be `https://`
-for an external / 3rd-party failover.
+Set the `ETH_NODE_1` to the address of the eth service. Leave as-is for local, or use a 3rd-party `wss://` address.
+Set `ETH_NODE_2` and `ETH_NODE_3` to failover eth services.
 
 Set the `PGSQL_URL`. If it's local for dev purposes, it can be `postgresql://postgres:postgres@pg_chainlink:5432/chainlink?sslmode=disable`. For an external
 DB, TLS should be enabled, and it'll be `postgresql://USER:PASSWORD@HOST:5432/chainlink?sslrootcert=/secrets/tls/pgsqlca.pem`, assuming the DB is called `chainlink`.
 
 Set the `NETWORK_ID` to the id of the network you are going to be on.
 
-Adjust `ETH1_NETWORK` to match the network, if you are going to use a local eth1.
+Adjust `ETH_NETWORK` to match the network, if you are going to use a local eth node.
 
 Adjust `LINK_CONTRACT_ADDRESS` to match the network.
 
-You can also adjust ports used by local eth1 and the chainlink web portal, and set the log level and chainlink version.
+You can also adjust ports used by local eth and the chainlink web portal, and set the log level and chainlink version.
 
-#
+
 # Start chainlink
 
 And finally: Start chainlink. `docker-compose up -d chainlink`
@@ -68,11 +67,19 @@ you specified in `apicredentials.txt`, and continue from there with job creation
 
 To stop all services, use `docker-compose down`
 
+# A note on eth node stability
+
+In testing, providing the `ETH_SECONDARY_URLS` environment variable destabilized the chainlink node (0.10.5). This tool
+uses the fiews eth failover proxy instead.
+
+In testing and by user reports, Fiews and Infura are good 3rd-party providers, while Alchemy has not been consistently stable
+for node operators as of May 2021.
+
 # Logging, troubleshooting
 
-You can get the chainlink and eth1 logs, respectively, via `docker-compose logs -f chainlink` and `docker-compose logs -f eth1`
+You can get the chainlink and eth logs, respectively, via `docker-compose logs -f chainlink` and `docker-compose logs -f eth`
 
-If you need to remove the DB, chainlink directory, or eth1 DB, take a look at volumes with `docker volume ls` and remove
+If you need to remove the DB, chainlink directory, or eth DB, take a look at volumes with `docker volume ls` and remove
 the volume you wish to clear with `docker volume rm`
 
 LICENSE: MIT

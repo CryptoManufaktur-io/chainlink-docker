@@ -1,6 +1,6 @@
 version: "3.4"
 services:
-  eth1:
+  eth:
     restart: "${RESTART}"
     user: geth
     build:
@@ -13,29 +13,29 @@ services:
     stop_grace_period: 3m
     image: geth_cl
     volumes:
-      - geth-eth1-data:/var/lib/goethereum
+      - geth-eth-data:/var/lib/goethereum
     ports:
-      - ${ETH1_PORT}:${ETH1_PORT}/tcp
-      - ${ETH1_PORT}:${ETH1_PORT}/udp
+      - ${ETH_PORT}:${ETH_PORT}/tcp
+      - ${ETH_PORT}:${ETH_PORT}/udp
     expose:
-      - ${ETH1_WS_PORT}/tcp
+      - ${ETH_WS_PORT}/tcp
     entrypoint:
       - geth
       - --nousb
       - --datadir
       - /var/lib/goethereum
       - --port
-      - ${ETH1_PORT}
+      - ${ETH_PORT}
       - --ws
       - --ws.addr
       - 0.0.0.0
       - --ws.port
-      - ${ETH1_WS_PORT}
+      - ${ETH_WS_PORT}
       - --ws.api
-      - eth,net
-      - --${ETH1_NETWORK}
+      - eth,net,web3
+      - --${ETH_NETWORK}
   chainlink:
     depends_on:
-      - eth1
+      - eth
 volumes:
-  geth-eth1-data:
+  geth-eth-data:
