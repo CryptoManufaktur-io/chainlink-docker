@@ -6,7 +6,7 @@ This tool simplifies the installation of a chainlink node with PostgreSQL and
 a choice of eth clients.
 
 Supported eth clients:
-* 3rd-party such as infura or alchemy
+* 3rd-party such as Fiews or Infura
 * Geth (geth.yml) 
 * OpenEthereum (oe.yml)
 * Besu (besu.yml)
