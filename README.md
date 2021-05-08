@@ -1,4 +1,4 @@
-# link-docker v0.2
+# link-docker
 
 docker-compose files for chainlink node
 

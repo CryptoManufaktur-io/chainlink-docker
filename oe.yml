@@ -9,7 +9,7 @@ services:
       args:
         - BUILD_TARGET=${OE_SRC_BUILD_TARGET}
         - DOCKER_TAG=${OE_DOCKER_TAG}
-    image: openethereum_cl
+    image: openethereum_cl:local
     stop_grace_period: 3m
     volumes:
       - oe-eth-data:/var/lib/openethereum
@@ -42,3 +42,4 @@ services:
       - eth
 volumes:
   oe-eth-data:
+

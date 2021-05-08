@@ -11,7 +11,7 @@ services:
         - DOCKER_TAG=${GETH_DOCKER_TAG}
     stop_signal: SIGINT
     stop_grace_period: 3m
-    image: geth_cl
+    image: geth_cl:local
     volumes:
       - geth-eth-data:/var/lib/goethereum
     ports:

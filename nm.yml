@@ -10,7 +10,7 @@ services:
       args:
         - BUILD_TARGET=${NM_SRC_BUILD_TARGET} 
         - DOCKER_TAG=${NM_DOCKER_TAG}
-    image: nethermind_cl
+    image: nethermind_cl:local
     volumes:
       - nm-eth-data:/var/lib/nethermind
     ports:

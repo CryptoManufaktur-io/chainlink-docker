@@ -1,0 +1,16 @@
+# /etc/systemd/system/cl.service
+
+[Unit]
+Description=Docker Compose CL Node Service
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=no
+WorkingDirectory=/home/ubuntu/link-docker
+ExecStart=/usr/bin/docker-compose up -d
+TimeoutStartSec=0
+
+[Install]
+WantedBy=containerd.service
