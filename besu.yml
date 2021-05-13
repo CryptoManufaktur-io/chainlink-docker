@@ -12,19 +12,27 @@ services:
       - ${ETH_PORT}:${ETH_PORT}/udp
     expose:
       - ${ETH_WS_PORT}/tcp
+      - ${ETH_RPC_PORT}/tcp
     entrypoint:
       - /opt/besu/bin/besu
       - --pruning-enabled
       - --p2p-port
       -  ${ETH_PORT}
+      - --rpc-http-enabled
+      - --rpc-http-api
+      - "web3,eth,net"
+      - --rpc-http-host
+      - 0.0.0.0
+      - --rpc-http-port
+      - ${ETH_RPC_PORT}
       - --rpc-ws-enabled
       - --rpc-ws-api
-      - "net,eth,web3"
+      - "web3,eth,net"
       - --rpc-ws-host
       - 0.0.0.0
       - --rpc-ws-port
       - ${ETH_WS_PORT}
-      - --host-allowlist=eth1,localhost
+      - --host-allowlist=eth,localhost
       - --logging
       - ${LOG_LEVEL}
       - --network
