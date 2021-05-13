@@ -6,7 +6,7 @@ services:
     stop_grace_period: 3m
     build:
       context: ./nethermind
-      dockerfile: ${NM_DOCKERFILE}
+      dockerfile: Dockerfile.binary
       args:
         - BUILD_TARGET=${NM_SRC_BUILD_TARGET} 
         - DOCKER_TAG=${NM_DOCKER_TAG}

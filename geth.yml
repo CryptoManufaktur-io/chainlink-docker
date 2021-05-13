@@ -5,7 +5,7 @@ services:
     user: geth
     build:
       context: ./geth
-      dockerfile: ${GETH_DOCKERFILE}
+      dockerfile: Dockerfile.binary
       args:
         - BUILD_TARGET=${GETH_SRC_BUILD_TARGET} 
         - DOCKER_TAG=${GETH_DOCKER_TAG}

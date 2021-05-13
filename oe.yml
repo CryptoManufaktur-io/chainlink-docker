@@ -5,7 +5,7 @@ services:
     user: openethereum
     build:
       context: ./openethereum
-      dockerfile: ${OE_DOCKERFILE}
+      dockerfile: Dockerfile.binary
       args:
         - BUILD_TARGET=${OE_SRC_BUILD_TARGET}
         - DOCKER_TAG=${OE_DOCKER_TAG}
