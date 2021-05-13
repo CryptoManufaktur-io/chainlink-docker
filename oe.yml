@@ -18,13 +18,17 @@ services:
       - ${ETH_PORT}:${ETH_PORT}/udp
     expose:
       - ${ETH_WS_PORT}/tcp
+      - ${ETH_RPC_PORT}/tcp
     entrypoint:
       - openethereum
       - --no-ipc
       - --no-secretstore
       - --base-path=/var/lib/openethereum
+      - --jsonrpc-interface=all
+      - --jsonrpc-apis=web3,eth,pubsub,net
+      - --jsonrpc-hosts=all
       - --ws-interface=all
-      - --ws-apis=safe
+      - --ws-apis=web3,eth,pubsub,net
       - --ws-hosts=all
       - --ws-origins=all
       - --ws-port=${ETH_WS_PORT}

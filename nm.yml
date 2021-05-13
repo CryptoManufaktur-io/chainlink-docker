@@ -18,6 +18,7 @@ services:
       - ${ETH_PORT}:${ETH_PORT}/udp
     expose:
       - ${ETH_WS_PORT}/tcp
+      - ${ETH_RPC_PORT}/tcp
     entrypoint:
       - dotnet
       - /nethermind/Nethermind.Runner.dll
@@ -27,16 +28,18 @@ services:
       - "true"
       - --JsonRpc.Enabled
       - "true"
-#      - --JsonRpc.EnabledModules
-#      - "Net,Eth,Web3,Subscribe"
       - --JsonRpc.Host
       - 0.0.0.0
+      - --JsonRpc.EnabledModules
+      - "Web3,Eth,Subscribe,Net"
+      - --JsonRpc.Port
+      - ${ETH_RPC_PORT}
+      - --JsonRpc.WebSocketsPort
+      - ${ETH_WS_PORT}
       - --Network.DiscoveryPort
       -  ${ETH_PORT}
       - --Network.P2PPort
       -  ${ETH_PORT}
-      - --JsonRpc.WebSocketsPort
-      - ${ETH_WS_PORT}
       - --Sync.FastSync
       - "true"
       - --config

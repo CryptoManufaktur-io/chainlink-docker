@@ -19,6 +19,7 @@ services:
       - ${ETH_PORT}:${ETH_PORT}/udp
     expose:
       - ${ETH_WS_PORT}/tcp
+      - ${ETH_RPC_PORT}/tcp
     entrypoint:
       - geth
       - --nousb
@@ -26,13 +27,21 @@ services:
       - /var/lib/goethereum
       - --port
       - ${ETH_PORT}
+      - --http
+      - --http.addr
+      - 0.0.0.0
+      - --http.vhosts=*
+      - --http.api
+      - web3,eth,net
+      - --http.port
+      - ${ETH_RPC_PORT}
       - --ws
       - --ws.addr
       - 0.0.0.0
       - --ws.port
       - ${ETH_WS_PORT}
       - --ws.api
-      - eth,net,web3
+      - web3,eth,net
       - --${ETH_NETWORK}
   chainlink:
     depends_on:
