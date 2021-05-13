@@ -49,6 +49,7 @@ Set the `ETH_NODE_1` to the address of the eth service. Leave as-is for local, o
 Set `ETH_NODE_2` and `ETH_NODE_3` and `ETH_NODE_4` to failover eth services.
 
 > If using dshackle.yml and not otherwise!
+
 Set `ETH_RPC_NODE_1` to the address of your first ETH node. Add `ETH_RPC_NODE_2` and `ETH_RPC_NODE3` if you have them. dshackle will also use
 the `ETH_NODE_1` etc parameters, these should match the ones you use here! dshackle will load-balance between these.
 The failover node will only be used when all other nodes are down. Set `ETH_FAIL_NODE` and `ETH_RPC_FAIL_NODE`, Fiews and Infura are both good choices here.
