@@ -2,9 +2,9 @@ version: v1
 
 cache:
   redis:
-    enabled: false
+    enabled: ${REDIS_ENABLED}
     host: ${REDIS_URL}
-    port: 13456
+    port: ${REDIS_PORT}
 
 proxy:
   host: 0.0.0.0

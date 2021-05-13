@@ -1,4 +1,4 @@
-.env
+.env*
 docker-compose.yml
 *.swp
 .secrets/apicredentials.txt

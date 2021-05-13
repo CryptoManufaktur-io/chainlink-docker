@@ -9,6 +9,8 @@ services:
   dshackle:
     restart: ${RESTART}
     image: emeraldpay/dshackle
+    build:
+      context: ./dshackle
     environment:
       - ETH_RPC_NODE_1=${ETH_RPC_NODE_1}
       - ETH_NODE_1=${ETH_NODE_1}
@@ -19,5 +21,16 @@ services:
       - ETH_RPC_FAIL_NODE=${ETH_RPC_FAIL_NODE}
       - ETH_FAIL_NODE=${ETH_FAIL_NODE}
       - ETH_NETWORK=${ETH_NETWORK}
+      - REDIS_ENABLED=${REDIS_ENABLED}
+      - REDIS_URL=${REDIS_URL}
+      - REDIS_PORT=${REDIS_PORT}
     volumes:
       - ./dshackle:/etc/dshackle
+    entrypoint:
+      - /etc/dshackle/dshackle-fill-redis-vars.sh
+      - java
+      - -Xms128m
+      - -Xmx512m
+      - -cp
+      - /app/resources:/app/classes:/app/libs/*
+      - io.emeraldpay.dshackle.StarterKt
