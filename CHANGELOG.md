@@ -1,3 +1,8 @@
+## v0.3.0
+
+* Chainlink 0.10.6
+* dShackle proxy for use with ETH JSON-RPC over http/https
+
 ## v0.2.1
 
 * Chainlink 0.10.5

@@ -13,19 +13,17 @@ RUN adduser \
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
   ca-certificates \
-  wget \
+  curl \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /var/lib/chainlink && chown ${USER}:${USER} /var/lib/chainlink
 
 # Grab dockerize so chainlink can wait for pgsql
-ENV DOCKERIZE_VERSION v0.6.1
-RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
-    && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
-    && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+RUN curl -sfL $(curl -s https://api.github.com/repos/powerman/dockerize/releases/latest | grep -i /dockerize-$(uname -s)-$(uname -m)\" | cut -d\" -f4) | install /dev/stdin /usr/local/bin/dockerize
 
 COPY ./wait-for-pgsql.sh /usr/local/bin/wait-for-pgsql.sh
+COPY ./wait-for-pgsql-dshackle.sh /usr/local/bin/wait-for-pgsql-dshackle.sh
 
 # Use an unprivileged user.
 USER ${USER}

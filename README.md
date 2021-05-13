@@ -14,6 +14,8 @@ Supported eth clients:
 
 Option:
 * pgsql.yml - unencrypted PGSQL DB for quick dev environment
+* dshackle.yml - ETH JSON-RPC http/https proxy for use with Chainlink >= 0.10.6
+> dShackle supports Ethereum mainnet as well as Kovan and Goerli testnets
 
 # Prerequisites
 
@@ -44,7 +46,14 @@ Set the `COMPOSE_FILE` to the mix of chainlink and eth node you wish to run. If 
 to just `chainlink.yml`. Pay attention to the networks supported by the different eth clients.
 
 Set the `ETH_NODE_1` to the address of the eth service. Leave as-is for local, or use a 3rd-party `wss://` address.
-Set `ETH_NODE_2` and `ETH_NODE_3` to failover eth services.
+Set `ETH_NODE_2` and `ETH_NODE_3` and `ETH_NODE_4` to failover eth services.
+
+> If using dshackle.yml and not otherwise!
+Set `ETH_RPC_NODE_1` to the address of your first ETH node. Add `ETH_RPC_NODE_2` and `ETH_RPC_NODE3` if you have them. dshackle will also use
+the `ETH_NODE_1` etc parameters, these should match the ones you use here! dshackle will load-balance between these.
+The failover node will only be used when all other nodes are down. Set `ETH_FAIL_NODE` and `ETH_RPC_FAIL_NODE`, Fiews and Infura are both good choices here.
+Because dShackle config can be a bit "just so", run it and see that the output matches what you expect: `docker-compose run --rm dshackle`
+
 
 Set the `PGSQL_URL`. If it's local for dev purposes, it can be `postgresql://postgres:postgres@pg_chainlink:5432/chainlink?sslmode=disable`. For an external
 DB, TLS should be enabled, and it'll be `postgresql://USER:PASSWORD@HOST:5432/chainlink?sslrootcert=/secrets/tls/pgsqlca.pem`, assuming the DB is called `chainlink`.

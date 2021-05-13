@@ -1,0 +1,23 @@
+version: '3.4'
+services:
+  chainlink:
+    environment:
+      - ETH_HTTP_URL=http://dshackle:8545/eth
+    entrypoint: wait-for-pgsql-dshackle.sh ${PGSQL_URL} chainlink
+    depends_on:
+      - dshackle
+  dshackle:
+    restart: ${RESTART}
+    image: emeraldpay/dshackle
+    environment:
+      - ETH_RPC_NODE_1=${ETH_RPC_NODE_1}
+      - ETH_NODE_1=${ETH_NODE_1}
+      - ETH_RPC_NODE_2=${ETH_RPC_NODE_2}
+      - ETH_NODE_2=${ETH_NODE_2}
+      - ETH_RPC_NODE_3=${ETH_RPC_NODE_3}
+      - ETH_NODE_3=${ETH_NODE_3}
+      - ETH_RPC_FAIL_NODE=${ETH_RPC_FAIL_NODE}
+      - ETH_FAIL_NODE=${ETH_FAIL_NODE}
+      - ETH_NETWORK=${ETH_NETWORK}
+    volumes:
+      - ./dshackle:/etc/dshackle

@@ -27,8 +27,8 @@ services:
       - "true"
       - --JsonRpc.Enabled
       - "true"
-      - --JsonRpc.EnabledModules
-      - "net,eth,web3"
+#      - --JsonRpc.EnabledModules
+#      - "Net,Eth,Web3,Subscribe"
       - --JsonRpc.Host
       - 0.0.0.0
       - --Network.DiscoveryPort
