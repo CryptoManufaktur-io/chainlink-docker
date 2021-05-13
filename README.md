@@ -10,7 +10,7 @@ Supported eth clients:
 * Geth (geth.yml) 
 * OpenEthereum (oe.yml)
 * Besu (besu.yml)
-* Nethermind (nm.yml) - not usable as of May 2021
+* Nethermind (nm.yml)
 
 Option:
 * pgsql.yml - unencrypted PGSQL DB for quick dev environment

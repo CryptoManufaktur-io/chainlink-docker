@@ -22,7 +22,7 @@ services:
     entrypoint:
       - dotnet
       - /nethermind/Nethermind.Runner.dll
-      - --Init.BaseDbPath
+      - --datadir
       - /var/lib/nethermind
       - --Init.WebSocketsEnabled
       - "true"

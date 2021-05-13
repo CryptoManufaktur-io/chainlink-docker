@@ -1,3 +1,8 @@
+## v0.3.1
+
+* Redis support for dShackle
+* Force less memory for dShackle - this may end up killing it, watch in production
+
 ## v0.3.0
 
 * Chainlink 0.10.6

@@ -9,8 +9,6 @@ services:
   dshackle:
     restart: ${RESTART}
     image: emeraldpay/dshackle
-    build:
-      context: ./dshackle
     environment:
       - ETH_RPC_NODE_1=${ETH_RPC_NODE_1}
       - ETH_NODE_1=${ETH_NODE_1}
