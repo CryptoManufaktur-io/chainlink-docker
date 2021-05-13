@@ -35,7 +35,7 @@ services:
     image: fiews/cl-eth-failover
     volumes:
       - eth-proxy:/var/eth-proxy/
-    entrypoint: /bin/sh -c "node index.js ${ETH_NODE_1} ${ETH_NODE_2} ${ETH_NODE_3} 2>&1 | tee /var/eth-proxy/eth-proxy.log"
+    entrypoint: /bin/sh -c "node index.js ${ETH_NODE_1} ${ETH_NODE_2} ${ETH_NODE_3} ${ETH_NODE_4} 2>&1 | tee /var/eth-proxy/eth-proxy.log"
 volumes:
   chainlink-data:
   eth-proxy:
