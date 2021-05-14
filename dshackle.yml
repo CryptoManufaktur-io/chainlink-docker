@@ -28,7 +28,7 @@ services:
       - /etc/dshackle/dshackle-fill-redis-vars.sh
       - java
       - -Xms128m
-      - -Xmx512m
+      - -Xmx1024m
       - -cp
       - /app/resources:/app/classes:/app/libs/*
       - io.emeraldpay.dshackle.StarterKt
