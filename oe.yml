@@ -32,6 +32,8 @@ services:
       - --ws-hosts=all
       - --ws-origins=all
       - --ws-port=${ETH_WS_PORT}
+      - --reseal-on-txs
+      - none
       - --chain=${ETH_NETWORK}
       - --port
       - ${ETH_PORT}
