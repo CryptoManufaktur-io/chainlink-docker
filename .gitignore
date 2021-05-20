@@ -1,6 +1,7 @@
 .env*
 docker-compose.yml
 *.swp
+dshackle/dshackle.yaml
 .secrets/apicredentials.txt
 .secrets/wallet-password.txt
 .secrets/tls

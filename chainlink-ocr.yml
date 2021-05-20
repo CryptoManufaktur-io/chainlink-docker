@@ -9,7 +9,7 @@ services:
         - USER=chainlink
         - DOCKER_TAG=${CHAIN_DOCKER_TAG}
     image: chainlink:local
-    env_file: chainlink.env
+    env_file: chainlink-ocr.env
     depends_on:
       - eth-proxy
     environment:
@@ -21,16 +21,20 @@ services:
       - CHAINLINK_TLS_PORT=${CHAIN_TLS_PORT}
       - DATABASE_URL=${PGSQL_URL}
       - MINIMUM_CONTRACT_PAYMENT=${MIN_PAY}
-      - OPERATOR_CONTRACT_ADDRESS=${OPERATOR_CONTRACT}
       - CLIENT_NODE_URL=https://localhost:${CHAIN_TLS_PORT}
+      - P2P_ANNOUNCE_IP=${P2P_ANNOUNCE_IP}
+      - P2P_ANNOUNCE_PORT=${P2P_ANNOUNCE_PORT}
+      - P2P_LISTEN_PORT=${P2P_ANNOUNCE_PORT}
+      - P2P_BOOTSTRAP_PEERS=${P2P_BOOTSTRAP_PEERS}
     ports:
       - ${CHAIN_PORT}:${CHAIN_PORT}/tcp
       - ${CHAIN_TLS_PORT}:${CHAIN_TLS_PORT}/tcp
+      - ${P2P_ANNOUNCE_PORT}:${P2P_ANNOUNCE_PORT}/tcp
     volumes:
       - chainlink-data:/var/lib/chainlink/
       - ./.secrets:/secrets
     entrypoint: wait-for-pgsql.sh ${PGSQL_URL} chainlink
-    command: node start --password /secrets/wallet-password.txt
+    command: node start --api /secrets/apicredentials.txt --password /secrets/wallet-password.txt
   eth-proxy:
     restart: ${RESTART}
     image: fiews/cl-eth-failover
