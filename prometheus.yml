@@ -1,0 +1,19 @@
+version: '3.4'
+services:
+  prometheus:
+    restart: "${RESTART}"
+    build:
+      context: ./prometheus
+    image: prometheus:local
+    volumes:
+      - prom-data:/prometheus
+    environment:
+      - CHAIN_TLS_PORT=${CHAIN_TLS_PORT}
+    expose:
+      - 9090/tcp
+    entrypoint: prometheus-fill-scrape-vars.sh
+    command: ["/bin/prometheus", "--storage.tsdb.path=/prometheus", "--web.console.libraries=/usr/share/prometheus/console_libraries", "--web.console.templates=/usr/share/prometheus/consoles", "--config.file=/etc/prometheus/prometheus.yml"]
+    depends_on:
+      - chainlink
+volumes:
+  prom-data:
