@@ -1,11 +1,11 @@
 # For use with AWS CloudWatch agent. Will require targets to be set manually
 global:
-  scrape_interval:     5s # Set the scrape interval to every 5 seconds. Default is every 1 minute.
+  scrape_interval:     15s # Set the scrape interval to every 5 seconds. Default is every 1 minute.
 
 scrape_configs:
-  - job_name: 'chainlink_p1'
+  - job_name: 'chainlink'
     static_configs:
-      - targets: ['chainlink:8443'] 
+      - targets: ['locahost:8443'] 
     scheme: https
     tls_config:
       insecure_skip_verify: true
